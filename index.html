@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高等学籍</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 15px;
+      font-family: "Microsoft Yahei", sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      position: relative; /* 新增：设置相对定位作为基准 */
+      padding-left: 30px; /* 预留返回键位置，避免标题被遮挡 */
+    }
+    .back-icon {
+      position: absolute; /* 新增：绝对定位 */
+      left: 0; /* 左对齐 */
+      top: 50%; /* 垂直居中 */
+      transform: translateY(-50%); /* 垂直居中微调 */
+      font-size: 22px;
+      cursor: pointer;
+    }
+    .banner {
+      background-color: #e0e0f8;
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    .banner-text .main {
+      font-size: 16px;
+      font-weight: bold;
+      color: #0000cc;
+      margin-bottom: 3px;
+    }
+    .banner-text .sub {
+      font-size: 12px;
+      color: #00008b;
+    }
+    .banner-img img {
+      width: 80px;
+      height: 55px;
+    }
+    .info-card {
+      background-color: #4CAF50;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 15px;
+      color: white;
+    }
+    .photo-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .photo-item {
+      margin-right: 10px;
+      text-align: center;
+    }
+    .photo-item img {
+      width: 70px;
+      height: 90px;
+      border-radius: 4px;
+    }
+    .photo-item .label {
+      font-size: 11px;
+      margin-top: 3px;
+    }
+    .name-birth .name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+    .name-birth .birth {
+      font-size: 14px;
+    }
+    .school-major {
+      margin-top: 10px;
+    }
+    .school-major .school {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 1px;
+    }
+    .school-major .undergraduate {
+      background-color: #81c784;
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: bold;
+      float: right;
+    }
+    .school-major .major {
+      font-size: 14px;
+      margin-top: 1px;
+      clear: both;
+    }
+    .field-group {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    .field-label {
+      width: 80px;
+      font-size: 14px;
+      color: #666;
+    }
+    .field-value {
+      font-size: 14px;
+      font-weight: bold;
+      flex: 1;
+      word-break: break-all;
+    }
+    .save-tip {
+      position: fixed;
+      bottom: 20px;
+      right: 0;
+      background-color: #333;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px 0 0 4px;
+      font-size: 14px;
+    }
+    .verify-btn {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 60px;
+    }
+    .verify-btn button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 95%;
+    }
+
+    @media (max-width: 375px) {
+      .banner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .banner-img {
+        margin-top: 8px;
+      }
+      .photo-group {
+        justify-content: center;
+      }
+      .name-birth {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
+      .field-label {
+        width: 70px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">
+    <span class="back-icon"><</span>
+    高等学籍
+  </div>
+
+  <div class="banner">
+    <div class="banner-text">
+      <div class="main">职场实习</div>
+      <div class="sub">反馈实习困惑、实战心得与建议，帮大家实习少走弯路</div>
+    </div>
+    <div class="banner-img">
+      <img src="placeholder_banner.png" alt="职场实习图标">
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="photo-group">
+      <div class="photo-item">
+        <img src="录取照片.png" alt="录取照片">
+        <div class="label">录取照片</div>
+      </div>
+      <div class="photo-item">
+        <img src="学历照片.png" alt="学历照片">
+        <div class="label">学历照片</div>
+      </div>
+      <div class="name-birth">
+        <div class="name">底有志</div>
+        <div class="birth">男 2002年01月10日</div>
+      </div>
+    </div>
+    <div class="school-major">
+      <div class="school">河北农业大学现代科技学院</div>
+      <div class="undergraduate">本科</div>
+      <div class="major">计算机科学与技术 | 普通全日制</div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <div class="field-label">民族</div>
+    <div class="field-value">回族</div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">证件号码</div>
+    <div class="field-value">130633200201101373</div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">学制</div>
+    <div class="field-value">4年</div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">学历类别</div>
+    <div class="field-value">普通高等教育</div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">分院</div>
+    <div class="field-value"></div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">系所</div>
+    <div class="field-value"></div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">班级</div>
+    <div class="field-value">2001</div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">学号</div>
+    <div class="field-value">2020614270107</div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">入学日期</div>
+    <div class="field-value">2020年09月15日</div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">学籍状态</div>
+    <div class="field-value">不在籍（毕业）</div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">离校日期</div>
+    <div class="field-value">2024年</div>
+  </div>
+
+
+  <div class="verify-btn">
+    <button>查看验证报告</button>
+  </div>
+</body>
+</html>
