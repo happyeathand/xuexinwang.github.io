@@ -3,266 +3,300 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>高等学籍</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 15px;
-      font-family: "Microsoft Yahei", sans-serif;
-    }
-    .title {
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      position: relative;
-      padding-left: 30px;
-    }
-    .back-icon {
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 22px;
-      cursor: pointer;
-    }
-    /**.banner {
-      background-color: #e0e0f8;
-      padding: 12px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
-    .banner-text .main {
-      font-size: 16px;
-      font-weight: bold;
-      color: #0000cc;
-      margin-bottom: 3px;
-    }
-    .banner-text .sub {
-      font-size: 12px;
-      color: #00008b;
-    }
-    .banner-img img {
-      width: 80px;
-      height: 55px;
-    }**/
-    /* 核心修正：180deg 实现从上到下，深绿→浅绿渐变 */
-    .info-card {
-      background: linear-gradient(180deg, #3ca550, #66d370); /* 180度=从上到下，深绿在前、浅绿在后 */
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 15px;
-      color: white;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    .photo-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
-    }
-    .photo-item {
-      margin-right: 10px;
-      text-align: center;
-    }
-    .photo-item img {
-      width: 70px;
-      height: 90px;
-      border-radius: 4px;
-    }
-    .photo-item .label {
-      font-size: 11px;
-      margin-top: 3px;
-    }
-    .name-birth .name {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 3px;
-    }
-    .name-birth .birth {
-      font-size: 14px;
-    }
-    .school-major {
-      margin-top: 10px;
-    }
-    .school-major .school {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 1px;
-    }
-    .school-major .undergraduate {
-      background-color: #81c784;
-      border-radius: 4px;
-      padding: 3px 8px;
-      font-size: 12px;
-      font-weight: bold;
-      float: right;
-    }
-    .school-major .major {
-      font-size: 14px;
-      margin-top: 1px;
-      clear: both;
-    }
-    .fields-container {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    .field-group {
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-    .field-label {
-      width: 45%;
-      font-size: 14px;
-      color: #666;
-      text-align: right;
-      padding-right: 10px;
-    }
-    .field-value {
-      width: 55%;
-      font-size: 14px;
-      font-weight: bold;
-      text-align: left;
-      padding-left: 10px;
-      word-break: break-all;
-    }
-    .save-tip {
-      position: fixed;
-      bottom: 20px;
-      right: 0;
-      background-color: #333;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 4px 0 0 4px;
-      font-size: 14px;
-    }
-    .verify-btn {
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 60px;
-    }
-    .verify-btn button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 15px;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 95%;
-    }
-    @media (max-width: 375px) {
-      .banner {
-        flex-direction: column;
-        text-align: center;
+  <title>学信档案 - 高等学籍</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'green-main': 'rgb(34, 175, 127)',
+            'green-gradient-end': 'rgb(63, 202, 145)',
+            'green-btn': 'rgb(40, 184, 135)',
+          },
+        },
       }
-      .banner-img {
-        margin-top: 8px;
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .green-vertical-gradient {
+        background: linear-gradient(to bottom, rgb(34, 175, 127), rgb(63, 202, 145));
       }
-      .photo-group {
-        justify-content: center;
+      .floating-card-shadow {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
       }
-      .name-birth {
-        margin-top: 10px;
+      .editable-text {
+        outline: none;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+      .editable-text:focus {
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+      }
+      .editable-text-white {
+        outline: none;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+      .editable-text-white:focus {
+        border: 1px solid rgba(255,255,255,0.5);
+        background-color: rgba(255,255,255,0.1);
+      }
+      .photo-upload-container {
+        position: relative;
+        cursor: pointer;
+      }
+      .photo-upload-input {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .photo-upload-hint {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30%;
+        background: rgba(0,0,0,0.3);
+        color: white;
         text-align: center;
+        line-height: 40px;
+        font-size: 12px;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        opacity: 0;
+        transition: opacity 0.3s;
       }
-      .field-label {
-        width: 40%;
-        font-size: 13px;
-      }
-      .field-value {
-        width: 60%;
-        font-size: 13px;
+      .photo-upload-container:hover .photo-upload-hint {
+        opacity: 1;
       }
     }
   </style>
 </head>
-<body>
-  <div class="title">
-    <span class="back-icon"><</span>
-    高等学籍
-  </div>
+<body class="bg-white m-0 p-0">
+  <!-- 顶部导航 -->
+  <header class="bg-white py-4 px-5 relative border-b border-gray-100">
+    <div class="absolute left-5 top-1/2 -translate-y-1/2">
+      <i class="fa fa-times text-xl text-gray-800"></i>
+    </div>
+    <div class="text-center">
+      <h1 class="text-[18px] font-medium mb-1 text-gray-900">学信档案</h1>
+      <p class="text-gray-500 text-[14px]">my.chsi.com.cn</p>
+    </div>
+    <div class="absolute right-5 top-1/2 -translate-y-1/2">
+      <i class="fa fa-ellipsis-v text-xl text-gray-800"></i>
+    </div>
+  </header>
 
+  <main class="px-4 py-5 bg-white">
+    <!-- 返回与标题：标题居中，返回图标在左侧 -->
+    <div class="relative flex items-center justify-center mb-6">
+      <i class="fa fa-angle-left text-[20px] text-gray-800 absolute left-0"></i>
+      <h2 class="text-[18px] font-medium text-gray-900">高等学籍</h2>
+    </div>
 
-  <div class="info-card">
-    <div class="photo-group">
-      <div class="photo-item">
-        <img src="luqu.png" alt="录取照片">
-        <div class="label">录取照片</div>
+    <!-- 专业满意度卡片（保留） -->
+    <div class="rounded-xl overflow-hidden mb-5 shadow-lg">
+      <div class="bg-gradient-to-r from-[#f7b55e] to-[#f9a539] p-5 text-white">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="text-[17px] font-medium mb-2">专业满意度</h3>
+            <p class="text-[13px] opacity-90">本专业的办学条件、教学质量、就业情况及综合情况</p>
+          </div>
+          <div class="flex items-center">
+            <span class="bg-white text-orange-500 text-[12px] px-2 py-1 rounded-full mr-3 font-medium">投票</span>
+            <div class="flex items-center">
+              <i class="fa fa-comment-o text-lg mr-2"></i>
+              <div class="flex">
+                <i class="fa fa-star text-yellow-300"></i>
+                <i class="fa fa-star text-yellow-300"></i>
+                <i class="fa fa-star text-yellow-300"></i>
+                <i class="fa fa-star-o text-yellow-300"></i>
+                <i class="fa fa-star-o text-yellow-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="photo-item">
-        <img src="xuewei.png" alt="学历照片">
-        <div class="label">学历照片</div>
+    </div>
+
+    <!-- 绿色区域：单独悬浮卡片 -->
+    <div class="green-vertical-gradient text-white p-5 rounded-xl floating-card-shadow mb-4">
+      <!-- 照片区域 -->
+      <div class="flex items-center mb-5">
+        <div class="flex mr-4">
+          <!-- 录取照片 -->
+          <div class="photo-upload-container w-16 h-16 rounded overflow-hidden mr-3 border-2 border-white/30" data-photo-type="admission">
+            <img src="https://picsum.photos/id/1012/200/200" alt="录取照片" class="w-full h-full object-cover">
+            <input type="file" accept="image/*" class="photo-upload-input">
+            <div class="photo-upload-hint">更换照片</div>
+          </div>
+          <!-- 学历照片 -->
+          <div class="photo-upload-container w-16 h-16 rounded overflow-hidden border-2 border-white/30" data-photo-type="degree">
+            <img src="" alt="学历照片" class="w-full h-full object-cover">
+            <input type="file" accept="image/*" class="photo-upload-input">
+            <div class="photo-upload-hint">更换照片</div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-[18px] font-medium mb-1 editable-text-white" contenteditable="true">张三</h3>
+          <p class="text-white/90 text-[14px] editable-text-white" contenteditable="true">男 1000年01月01日</p>
+        </div>
       </div>
-      <div class="name-birth">
-        <div class="name">底有志</div>
-        <div class="birth">男 2002年01月10日</div>
+
+      <!-- 照片标签 -->
+      <div class="flex ml-1 mb-4">
+        <span class="text-[12px] text-white/80 mr-8">录取照片</span>
+        <span class="text-[12px] text-white/80">学历照片</span>
+      </div>
+
+      <!-- 学校专业信息 -->
+      <div>
+        <h4 class="text-[17px] font-medium mb-2 editable-text-white" contenteditable="true">某某大学</h4>
+        <div class="flex items-center">
+          <span class="text-[15px] mr-3 editable-text-white" contenteditable="true">计算机</span>
+          <span class="text-[15px] mr-3">|</span>
+          <span class="text-[15px] editable-text-white" contenteditable="true">全日制</span>
+          <span class="ml-auto bg-green-btn text-white text-[13px] px-3 py-1 rounded-full editable-text-white" contenteditable="true">硕士研究生</span>
+        </div>
       </div>
     </div>
-    <div class="school-major">
-      <div class="school">底爱陈大学</div>
-      <div class="undergraduate">本科</div>
-      <div class="major">计算机科学与技术 | 普通全日制</div>
-    </div>
-  </div>
 
-  <div class="fields-container">
-    <div class="field-group">
-      <div class="field-label">民族</div>
-      <div class="field-value">回族</div>
+    <!-- 白色信息区域：无边界，直接在背景上 -->
+    <div class="space-y-4 mb-4">
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">民族</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true">某族</div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">证件号码</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true"></div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">学制</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true">4年</div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">学历类别</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true">普通高等教育</div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">分院</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true">某学院</div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">系所</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true"></div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">班级</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true"></div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">学号</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true"></div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">入学日期</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true">20xx年xx月xx日</div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">学籍状态</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true">在籍（注册学籍）</div>
+      </div>
+      <div class="flex">
+        <div class="w-1/3 text-right text-gray-600 text-[15px] pr-4">预计毕业日期</div>
+        <div class="w-2/3 text-[15px] editable-text" contenteditable="true">20xx年06月20日</div>
+      </div>
     </div>
-    <div class="field-group">
-      <div class="field-label">证件号码</div>
-      <div class="field-value">130633200201101373</div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">学制</div>
-      <div class="field-value">4年</div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">学历类别</div>
-      <div class="field-value">普通高等教育</div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">分院</div>
-      <div class="field-value"></div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">系所</div>
-      <div class="field-value"></div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">班级</div>
-      <div class="field-value">2001</div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">学号</div>
-      <div class="field-value">2020614270107</div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">入学日期</div>
-      <div class="field-value">2020年09月15日</div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">学籍状态</div>
-      <div class="field-value">不在籍（毕业）</div>
-    </div>
-    <div class="field-group">
-      <div class="field-label">离校日期</div>
-      <div class="field-value">2024年06月08日</div>
-    </div>
-  </div>
 
+    <!-- 按钮区域：无边界 -->
+    <div class="space-y-3" id="save-btn-container">
+      <button class="w-full bg-green-btn text-white py-3 rounded-lg font-medium text-[16px]" id="save-btn">保存修改</button>
+    </div>
+    <button class="w-full bg-green-btn text-white py-3 rounded-lg font-medium text-[16px]">查看验证报告</button>
+  </main>
 
+  <script>
+    // 照片上传预览逻辑
+    const tempPhotos = {};
+    document.querySelectorAll('.photo-upload-container').forEach(container => {
+      const input = container.querySelector('.photo-upload-input');
+      const img = container.querySelector('img');
+      const photoType = container.dataset.photoType;
 
-  <div class="verify-btn">
-    <button>查看验证报告</button>
-  </div>
+      window.addEventListener('load', () => {
+        const savedPhoto = localStorage.getItem(`studentPhoto_${photoType}`);
+        if (savedPhoto) {
+          img.src = savedPhoto;
+          if (photoType === 'degree') container.querySelector('.fa-user')?.remove();
+        } else if (photoType === 'degree') {
+          img.style.display = 'none';
+          const icon = document.createElement('i');
+          icon.className = 'fa fa-user text-white/70 text-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2';
+          container.appendChild(icon);
+        }
+      });
+
+      input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          tempPhotos[photoType] = event.target.result;
+          img.src = tempPhotos[photoType];
+          img.style.display = 'block';
+          container.querySelector('.fa-user')?.remove();
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    // 保存修改逻辑
+    const saveBtn = document.getElementById('save-btn');
+    const saveBtnContainer = document.getElementById('save-btn-container');
+    saveBtn.addEventListener('click', function() {
+      // 保存照片
+      Object.keys(tempPhotos).forEach(photoType => {
+        localStorage.setItem(`studentPhoto_${photoType}`, tempPhotos[photoType]);
+      });
+
+      // 锁定文字编辑
+      document.querySelectorAll('.editable-text-white, .editable-text').forEach(el => {
+        el.contentEditable = 'false';
+        el.classList.remove('editable-text-white', 'editable-text');
+      });
+
+      // 隐藏保存按钮
+      saveBtnContainer.style.display = 'none';
+
+      // 提示
+      const toast = document.createElement('div');
+      toast.textContent = '保存成功！';
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        z-index: 9999;
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    });
+  </script>
 </body>
 </html>
